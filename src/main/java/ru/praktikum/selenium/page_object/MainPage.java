@@ -1,10 +1,19 @@
-package ru.praktikum.selenium.pageObject;
+package ru.praktikum.selenium.page_object;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Locators {
+import java.util.List;
+
+import static ru.praktikum.selenium.config.AppConfig.APP_URL;
+
+public class MainPage {
     private WebDriver webDriver;
+    private final int questionNumber;
 
     //раздел "Вопросы о важном"
     //раскрывающиеся ответы на вопросы
@@ -36,31 +45,28 @@ public class Locators {
     public final static By TWO_DAYS_RENT = By.xpath("/html/body/div/div/div[2]/div[2]/div[2]/div[2]/div[2]");
 
     //кнопка "Закрыть куки"
-    public final static  By cookieButton = By.className("App_CookieButton__3cvqF");
+    public final static  By cookieButton = By.xpath(".//button[text()='да все привыкли']");
 
-    //поле ввода имени
-    public static final  By nameField = By.cssSelector(".Input_InputContainer__3NykH:nth-child(1) > .Input_Responsible__1jDKN");
-    //поле ввода фамилии
-    public static final  By secondNameField = By.cssSelector(".Input_InputContainer__3NykH:nth-child(2) > .Input_Input__1iN_Z");
-    //поле ввода адреса
-    public static final  By addressField = By.cssSelector(".Input_InputContainer__3NykH:nth-child(3) > .Input_Input__1iN_Z");
-    //выбор станции метро
-    public static final  By metroField = By.cssSelector(".select-search__input");
-    //поле ввода номера телефона
-    public static final By phoneField = By.cssSelector(".Input_InputContainer__3NykH:nth-child(5) > .Input_Input__1iN_Z");
 
-    //про аренду
-    public static final By dateField = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
-    //поле выбора срока аренды
-    public static final By durationField = By.xpath("/html/body/div/div/div[2]/div[2]/div[2]/div[1]/div[1]");
-    //поле ввода комментария
-    public static final By commentField = By.cssSelector(".Input_InputContainer__3NykH > .Input_Responsible__1jDKN");
-    //кнопка "Заказать"
-    public static final By finalOrderButton = By.xpath(".//div[starts-with(@class, 'Order_Buttons')]/button[text()='Заказать']");
-    //кнопка подтверждения заказа - "ДА"
-    public static final By confirmationButton =  By.xpath(".//div[starts-with(@class,'Order_Buttons')]/button[text()='Да']");
-    //окно информации о заказе
-    public static final By confirmationWindow = By.xpath(".//div[starts-with(@class,'Order_ModalHeader')]");
-    //кнопка "далее"
-    public static final By nextButton = By.xpath("/html/body/div/div/div[2]/div[3]/button");
+    public MainPage(WebDriver webDriver, int questionNumber) {
+        this.webDriver = webDriver;
+        this.questionNumber = questionNumber;
+        webDriver.get(APP_URL);
+    }
+
+    public MainPage clickOnDropDownElement(){
+        List<WebElement> list_elements = webDriver.findElements(buttonShowAnswer);
+        WebElement element = list_elements.get(questionNumber);
+        ((JavascriptExecutor)webDriver).executeScript("arguments[0].scrollIntoView();",element);
+        element.click();
+        return this;
+    }
+
+    public String actualText(){
+        String answerId = ("accordion__panel-" + questionNumber);
+        new WebDriverWait(webDriver, 5_000).until(ExpectedConditions.visibilityOfElementLocated(By.id(answerId)));
+        return webDriver.findElement(By.id(answerId)).getText();
+    }
+
+
 }
