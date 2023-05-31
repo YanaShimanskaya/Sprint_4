@@ -13,7 +13,6 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import ru.praktikum.selenium.page_object.FillInFirstPage;
 import ru.praktikum.selenium.page_object.FillInSecondPage;
 import ru.praktikum.selenium.page_object.WebDriverFactory;
-
 import java.util.concurrent.TimeUnit;
 
 import static ru.praktikum.selenium.config.AppConfig.APP_URL;

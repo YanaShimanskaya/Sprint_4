@@ -17,7 +17,7 @@ public class MainPage {
 
     //раздел "Вопросы о важном"
     //раскрывающиеся ответы на вопросы
-    public static final By buttonShowAnswer = By.className("accordion__button");
+    public static final By BUTTON_SHOW_ANSWER = By.className("accordion__button");
 
     //текст ответов на вопросы о важном
     public final static String TEXT_ANSWER_HOW = "Сутки — 400 рублей. Оплата курьеру — наличными или картой.";
@@ -33,19 +33,8 @@ public class MainPage {
     public final static By UPPER_ORDER_BUTTON = By.xpath(".//div[starts-with(@class, 'Header_Nav')]/button[text()='Заказать']");
     //нижняя кнопка "заказать"
     public final static By LOWER_ORDER_BUTTON = By.xpath(".//div[starts-with(@class, 'Home_FinishButton')]/button[text()='Заказать']");
-    //чек боксы выбора цвета
-    //черный
-    public final static By BLACK_COLOUR = By.id("black");
-    //серый
-    public final static By GREY_COLOUR = By.id("grey");
-    //выпадающий список продолжительности аренды
-    //один день
-    public final static By ONE_DAY_RENT = By.xpath("/html/body/div/div/div[2]/div[2]/div[2]/div[2]/div[1]");
-    //двое суток
-    public final static By TWO_DAYS_RENT = By.xpath("/html/body/div/div/div[2]/div[2]/div[2]/div[2]/div[2]");
-
     //кнопка "Закрыть куки"
-    public final static  By cookieButton = By.xpath(".//button[text()='да все привыкли']");
+    public final static  By COOKIE_BUTTON = By.xpath(".//button[text()='да все привыкли']");
 
 
     public MainPage(WebDriver webDriver, int questionNumber) {
@@ -55,7 +44,7 @@ public class MainPage {
     }
 
     public MainPage clickOnDropDownElement(){
-        List<WebElement> list_elements = webDriver.findElements(buttonShowAnswer);
+        List<WebElement> list_elements = webDriver.findElements(BUTTON_SHOW_ANSWER);
         WebElement element = list_elements.get(questionNumber);
         ((JavascriptExecutor)webDriver).executeScript("arguments[0].scrollIntoView();",element);
         element.click();
